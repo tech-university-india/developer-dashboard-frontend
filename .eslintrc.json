@@ -33,6 +33,10 @@
         ],
         "react/prop-types": [
             "off"
+        ],
+        "semi": [
+            "error",
+            "never"
         ]
     }
 }
