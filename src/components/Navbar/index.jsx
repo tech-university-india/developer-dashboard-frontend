@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react'
-import { FaUserCircle } from 'react-icons/fa'
-import { RiArrowDropDownLine } from 'react-icons/ri'
+import React from 'react';
+import { FaUserCircle } from 'react-icons/fa';
+import { RiArrowDropDownLine } from 'react-icons/ri';
 
 function Navbar() {
   return (
@@ -19,7 +19,7 @@ function Navbar() {
         <RiArrowDropDownLine className="w-8 h-8" />
       </div>
     </div>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

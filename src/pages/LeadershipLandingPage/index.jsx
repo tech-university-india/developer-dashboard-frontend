@@ -1,6 +1,6 @@
-import React from 'react'
-import LeadershipSummary from '../../components/LeadershipSummary'
-import Navbar from '../../components/Navbar'
+import React from 'react';
+import LeadershipSummary from '../../components/LeadershipSummary';
+import Navbar from '../../components/Navbar';
 
 function LeadershipLandingPage() {
   return (
@@ -8,7 +8,7 @@ function LeadershipLandingPage() {
       <Navbar />
       <LeadershipSummary />
     </div>
-  )
+  );
 }
 
-export default LeadershipLandingPage
+export default LeadershipLandingPage;
