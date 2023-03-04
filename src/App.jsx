@@ -1,11 +1,22 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
 import LeadershipLandingPage from './pages/LeadershipLandingPage';
+import { ERROR_ROUTE, HOME_ROUTE } from './constants/routes';
+import Pages from './pages/index';
 
 function App() {
   return (
     <div className="App">
-      <LeadershipLandingPage />
+      <BrowserRouter>
+        <Routes>
+          <Route path={HOME_ROUTE} element={<Pages.LeadershipLandingPage />} />
+          <Route path={`${ERROR_ROUTE}/:errorCode?`} element={<Pages.ErrorPage />} />
+          <Route path="*" element={<Pages.NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
