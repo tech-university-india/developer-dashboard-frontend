@@ -1,9 +1,85 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import * as React from 'react';
-import { styled } from '@mui/system';
-import TablePaginationUnstyled, {
-  tablePaginationUnstyledClasses as classes
-} from '@mui/base/TablePaginationUnstyled';
+import PropTypes from 'prop-types';
+import { useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import LastPageIcon from '@mui/icons-material/LastPage';
+import { TableHead } from '@mui/material';
+
+function TablePaginationActions(props) {
+  const theme = useTheme();
+  const {
+    count, page, rowsPerPage, onPageChange
+  } = props;
+
+  const handleFirstPageButtonClick = (event) => {
+    onPageChange(event, 0);
+  };
+
+  const handleBackButtonClick = (event) => {
+    onPageChange(event, page - 1);
+  };
+
+  const handleNextButtonClick = (event) => {
+    onPageChange(event, page + 1);
+  };
+
+  const handleLastPageButtonClick = (event) => {
+    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+  };
+
+  return (
+    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+      <IconButton
+        onClick={handleFirstPageButtonClick}
+        disabled={page === 0}
+        aria-label="first page"
+      >
+        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+      </IconButton>
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label="previous page"
+      >
+        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+      </IconButton>
+      <IconButton
+        onClick={handleNextButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="next page"
+      >
+        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+      </IconButton>
+      <IconButton
+        onClick={handleLastPageButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="last page"
+      >
+        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+      </IconButton>
+    </Box>
+  );
+}
+
+TablePaginationActions.propTypes = {
+  count: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired
+};
 
 function createData(name, calories, fat) {
   return { name, calories, fat };
@@ -25,67 +101,7 @@ const rows = [
   createData('Oreo', 437, 18.0)
 ];
 
-const Root = styled('div')`
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  td,
-  th {
-    text-align: left;
-    padding: 8px;
-    height: 60px;
-  }
-
-  td{
-    background-color: #fff;
-    border-bottom: 2px solid #ddd; 
-  },
-
-  th {
-    background-color: #000;
-    color: #fff;
-  },
-`;
-
-const CustomTablePagination = styled(TablePaginationUnstyled)`
-  & .${classes.toolbar} {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-
-    @media (min-width: 768px) {
-      flex-direction: row;
-      align-items: center;
-    }
-  }
-
-  & .${classes.selectLabel} {
-    margin: 0;
-  }
-
-  & .${classes.displayedRows} {
-    margin: 0;
-
-    @media (min-width: 768px) {
-      margin-left: auto;
-    }
-  }
-
-  & .${classes.spacer} {
-    display: none;
-  }
-
-  & .${classes.actions} {
-    display: flex;
-    gap: 0.25rem;
-  }
-`;
-
-export default function UnstyledTable() {
+export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(3);
 
@@ -102,60 +118,58 @@ export default function UnstyledTable() {
   };
 
   return (
-    <div className="flex-1">
-      <Root sx={{ maxWidth: '100%' }}>
-        <table aria-label="custom pagination table">
-          <thead>
-            <tr>
-              <th>Dessert</th>
-              <th>Calories</th>
-              <th>Fat</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(rowsPerPage > 0
-              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : rows
-            ).map((row) => (
-              <tr key={row.name}>
-                <td>{row.name}</td>
-                <td style={{ width: 160 }} align="right">
-                  {row.calories}
-                </td>
-                <td style={{ width: 160 }} align="right">
-                  {row.fat}
-                </td>
-              </tr>
-            ))}
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+        <TableHead style={{ backgroundColor: 'black' }}>
+          <TableCell style={{ color: 'white' }} align="left">Name</TableCell>
+          <TableCell style={{ color: 'white' }} align="left">Calories</TableCell>
+          <TableCell style={{ color: 'white' }} align="left">Fat</TableCell>
+        </TableHead>
+        <TableBody>
+          {(rowsPerPage > 0
+            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : rows
+          ).map((row) => (
+            <TableRow key={row.name}>
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="left">
+                {row.calories}
+              </TableCell>
+              <TableCell align="left">
+                {row.fat}
+              </TableCell>
+            </TableRow>
+          ))}
 
-            {emptyRows > 0 && (
-              <tr style={{ height: 41 * emptyRows }}>
-                <td colSpan={3} />
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </Root>
-      <div className="flex justify-center p-5">
-        <CustomTablePagination
-          rowsPerPageOptions={[3, 5, 10, { label: 'All', value: -1 }]}
-          colSpan={3}
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          slotProps={{
-            select: {
-              'aria-label': 'rows per page'
-            },
-            actions: {
-              showFirstButton: true,
-              showLastButton: true
-            }
-          }}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </div>
-    </div>
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 53 * emptyRows }}>
+              <TableCell colSpan={6} />
+            </TableRow>
+          )}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[3, 5, 10, { label: 'All', value: -1 }]}
+              colSpan={3}
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  'aria-label': 'rows per page'
+                },
+                native: true
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </TableContainer>
   );
 }
