@@ -6,7 +6,7 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 function Navbar() {
   return (
     <div className="flex items-center bg-black w-screen">
-      <div className="flex-1 text-white p-3 pl-5">
+      <div className="flex-1 text-white text-lg p-3 pl-5">
         Project Management
         {' '}
         <br />

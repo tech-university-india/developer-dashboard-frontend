@@ -7,7 +7,7 @@ import OverviewTable from '../OverviewTable';
 
 function LandingPageOverview() {
   return (
-    <div className={`flex flex-col items-center bg-[${BODY_BGCOLOR}]`}>
+    <div className={`flex flex-1 flex-col items-center bg-[${BODY_BGCOLOR}]`}>
       <div className="flex justify-between items-center w-11/12 m-5">
         <div className="flex text-2xl font-bold">
           Project Overview
