@@ -45,15 +45,15 @@ export default function Login() {
 
   return (
 
-    <div className="h-1/2 w-96 bg-white shadow-2xl rounded-3xl flex flex-col justify-center">
+    <div className="h-1/2 w-96 bg-blue-50 shadow-2xl rounded-3xl flex flex-col justify-center">
       <form className="flex flex-col mt-5" onSubmit={handleSubmit}>
         <label className="shadow-xl py-2 bg-white flex flex-col mx-9 rounded-xl">
           <p className="mx-4">Username</p>
-          <input className="mx-4 py-1 rounded-xl" type="text" value={username} onChange={handleUsernameChange} />
+          <input className="mx-4 py-1 bg-gray-200 rounded-xl" type="text" value={username} onChange={handleUsernameChange} />
         </label>
         <label className="shadow-xl py-2 bg-white flex flex-col mt-5 mx-9 rounded-xl">
           <p className="mx-4">Password</p>
-          <input className="mx-4 rounded-xl py-1" type="password" value={password} onChange={handlePasswordChange} />
+          <input className="mx-4 bg-gray-200 rounded-xl py-1" type="password" value={password} onChange={handlePasswordChange} />
         </label>
         <input className="shadow-xl bg-blue-200 mt-5 mx-9 rounded-xl py-3" type="submit" value="Login" />
       </form>
