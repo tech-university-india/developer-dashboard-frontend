@@ -1,15 +1,16 @@
 import axios from 'axios';
-import BACKEND_URL from '../../constants/apiEndpoints';
 import { ERROR_ROUTE } from '../../constants/routes';
 
 const makeRequest = async (apiEndPoint, navigate, dynamicConfig = {}) => {
   try {
     const requestDetails = {
-      baseURL: BACKEND_URL,
       url: apiEndPoint.url,
       method: apiEndPoint.method,
-      ...dynamicConfig
+      ...dynamicConfig,
+      headers: {
 
+        'Content-Type': 'application/json'
+      }
     };
     const { data } = await axios(requestDetails);
     return data;
