@@ -11,7 +11,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import PropTypes from 'prop-types';
-import editIcon from '../../assets/icons/edit-solid.svg';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -53,7 +54,7 @@ function CustomizedTables(props) {
           {users.map((user) => (
             <StyledTableRow key={user.name}>
               <StyledTableCell component="th" scope="row">
-                {`${user.firstname} ${user.lastname}`}
+                {user.name}
               </StyledTableCell>
               <StyledTableCell>{user.username}</StyledTableCell>
               <StyledTableCell>{user.email}</StyledTableCell>
@@ -62,12 +63,12 @@ function CustomizedTables(props) {
               <StyledTableCell>
                 <div className="flex flex-row">
                   <div className="w-2/3">
-                    {user.github}
+                    {user.github ?? '----'}
                   </div>
                   <div className="w-1/3">
                     <button type="button" onClick={() => handleUpdateUser(user)} className="w-5 mx-5">
                       {' '}
-                      <img src={editIcon} alt="Edit" className="stroke-blue" />
+                      <FontAwesomeIcon icon={faEdit} color="blue" />
                     </button>
                   </div>
 

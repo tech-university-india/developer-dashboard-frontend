@@ -17,27 +17,28 @@ import roles from '../../constants';
 
 function AddUserDialog(props) {
   const {
-    isOpen, title, onSubmit, oldUser
+    isOpen, setOpen, title, onSubmit, oldUser
   } = props;
-  const [open, setOpen] = React.useState(isOpen);
   const [user, setUser] = React.useState(oldUser);
+  const [firstname, setFirstname] = React.useState(user?.name?.split(' ')[0] ?? '');
+  const [lastname, setLastname] = React.useState(user?.name?.split(' ')[1] ?? '');
   const navigate = useNavigate();
-
   const handleSubmit = async () => {
-    await onSubmit(user);
+    const newUser = { ...user };
+    newUser.name = `${firstname} ${lastname}`;
+    setUser(newUser);
+    await onSubmit(newUser);
   };
 
   useEffect(() => {
-    setOpen(isOpen);
     setUser(oldUser);
-  }, [isOpen]);
+    setFirstname(oldUser?.name?.split(' ')[0] ?? '');
+    setLastname(oldUser?.name?.split(' ')[1] ?? '');
+  }, [oldUser]);
 
-  const handleToClose = () => {
-    setOpen(false);
-  };
   return (
     <div className="h-40v">
-      <Dialog className="flex flex-col items-center" open={open} onClose={handleToClose}>
+      <Dialog className="flex flex-col items-center" open={isOpen}>
         <DialogTitle className=" text-center">
           <div className="my-10 font-semibold text-3xl">{title}</div>
         </DialogTitle>
@@ -49,13 +50,13 @@ function AddUserDialog(props) {
               className="w-48"
               required
               autoFocus
-              onChange={async (value) => {
-                setUser({ ...user, firstname: value.target.value });
+              onChange={(value) => {
+                setFirstname(value.target.value);
               }}
               placeholder="First Name"
               margin="normal"
               id="firstname"
-              defaultValue={user.firstname}
+              value={firstname}
               type="text"
               variant="outlined"
             />
@@ -65,11 +66,11 @@ function AddUserDialog(props) {
               margin="normal"
               id="lastname"
               placeholder="Last Name"
-              defaultValue={user.lastname}
+              value={lastname}
               type="text"
               variant="outlined"
-              onChange={async (value) => {
-                setUser({ ...user, lastname: value.target.value });
+              onChange={(value) => {
+                setLastname(value.target.value);
               }}
             />
             <TextField
@@ -80,8 +81,8 @@ function AddUserDialog(props) {
               placeholder="Email Address"
               type="email"
               variant="outlined"
-              defaultValue={user.email}
-              onChange={async (value) => {
+              value={user.email}
+              onChange={(value) => {
                 setUser({ ...user, email: value.target.value });
               }}
             />
@@ -93,9 +94,8 @@ function AddUserDialog(props) {
               label="Role"
               placeholder="Role"
               variant="outlined"
-              defaultValue={user.role}
-              // value={user.role}
-              onChange={async (event) => {
+              value={user.role}
+              onChange={(event) => {
                 setUser({ ...user, role: event.target.value });
               }}
             >
@@ -104,7 +104,6 @@ function AddUserDialog(props) {
                   {role}
                 </MenuItem>
               ))}
-
             </TextField>
             <TextField
               className="w-48"
@@ -114,7 +113,7 @@ function AddUserDialog(props) {
               placeholder="Phone Number"
               type="number"
               variant="outlined"
-              defaultValue={user.phoneno}
+              value={user.phoneno}
               onChange={async (value) => {
                 setUser({ ...user, phoneno: value.target.value });
               }}
@@ -128,9 +127,8 @@ function AddUserDialog(props) {
                 placeholder="Github Username"
                 type="text"
                 variant="outlined"
-                defaultValue={user.github}
+                value={user.github}
                 onChange={async (value) => {
-                  console.log(value.target.value);
                   setUser({ ...user, github: value.target.value });
                 }}
               />
@@ -139,7 +137,9 @@ function AddUserDialog(props) {
               <button
                 className="border-2 rounded-2xl border-blue-800 w-24 h-9 my-10 text-blue-800 mr-10"
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                }}
               >
                 Cancel
 
@@ -165,6 +165,7 @@ function AddUserDialog(props) {
 }
 AddUserDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   oldUser: PropTypes.any
