@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AddUserDialog from '../../components/AddUserDialog';
 
 import Navbar from '../../components/Navbar';
+import ProjectDialog from '../../components/ProjectDialog';
 import CustomizedTables from '../../components/Table';
 import { ADD_USER_URL, GET_USERS_URL, UPDATE_USER_BY_ID_URL } from '../../constants/apiEndpoints';
 import makeRequest from '../../utils/makeRequest';
@@ -14,11 +15,6 @@ function AdminDashboard() {
   const [editUser, setEditUser] = useState({});
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   console.log(editUser);
-  //   setIsEdit(true);
-  // }, [editUser]);
 
   const handleClickOpen = () => {
     setIsOpen(true);
@@ -68,6 +64,7 @@ function AdminDashboard() {
           >
             <p className="text-blue-800">Add User</p>
           </button>
+          {/* <ProjectDialog /> */}
           <AddUserDialog onSubmit={addUser} title="Add User" isOpen={isOpen} setOpen={setIsOpen} />
           <AddUserDialog onSubmit={updateUser} title="Edit User" oldUser={editUser} isOpen={isEdit} setOpen={setIsEdit} />
         </div>

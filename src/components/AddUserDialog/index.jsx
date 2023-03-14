@@ -56,7 +56,7 @@ function AddUserDialog(props) {
               placeholder="First Name"
               margin="normal"
               id="firstname"
-              value={firstname}
+              value={firstname ?? ''}
               type="text"
               variant="outlined"
             />
@@ -66,7 +66,7 @@ function AddUserDialog(props) {
               margin="normal"
               id="lastname"
               placeholder="Last Name"
-              value={lastname}
+              value={lastname ?? ''}
               type="text"
               variant="outlined"
               onChange={(value) => {
@@ -81,7 +81,7 @@ function AddUserDialog(props) {
               placeholder="Email Address"
               type="email"
               variant="outlined"
-              value={user.email}
+              value={user?.email ?? ''}
               onChange={(value) => {
                 setUser({ ...user, email: value.target.value });
               }}
@@ -94,7 +94,7 @@ function AddUserDialog(props) {
               label="Role"
               placeholder="Role"
               variant="outlined"
-              value={user.role}
+              value={user?.role ?? ''}
               onChange={(event) => {
                 setUser({ ...user, role: event.target.value });
               }}
@@ -113,12 +113,12 @@ function AddUserDialog(props) {
               placeholder="Phone Number"
               type="number"
               variant="outlined"
-              value={user.phoneno}
+              value={user?.phoneno ?? ''}
               onChange={async (value) => {
                 setUser({ ...user, phoneno: value.target.value });
               }}
             />
-            {user.role === 'Developer' && (
+            {user?.role === 'Developer' && (
               <TextField
                 className="w-48"
                 autoFocus
@@ -127,7 +127,7 @@ function AddUserDialog(props) {
                 placeholder="Github Username"
                 type="text"
                 variant="outlined"
-                value={user.github}
+                value={user?.github ?? ''}
                 onChange={async (value) => {
                   setUser({ ...user, github: value.target.value });
                 }}
