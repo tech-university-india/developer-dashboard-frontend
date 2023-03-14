@@ -1,3 +1,6 @@
-const BACKEND_URL = 'http://localhost:8080';
+export const BACKEND_URL = 'http://localhost:3000/';
 
-export default BACKEND_URL;
+export const AUTHENTICATE_USER = {
+  url: 'auth',
+  method: 'post'
+};
