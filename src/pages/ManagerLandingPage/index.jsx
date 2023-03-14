@@ -1,16 +1,16 @@
 import React from 'react';
 import LandingPageOverview from '../../components/LandingPageOverview';
-import LeadershipLandingPageSummary from '../../components/LeadershipLandingPageSummary';
+import ManagerLandingPageSummary from '../../components/ManagerLandingPageSummary';
 import Navbar from '../../components/Navbar';
 
-function LeadershipLandingPage() {
+function ManagerLandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <LeadershipLandingPageSummary />
+      <ManagerLandingPageSummary />
       <LandingPageOverview />
     </div>
   );
 }
 
-export default LeadershipLandingPage;
+export default ManagerLandingPage;
